@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: deliluncher-app
+    env_file:
+      - .env
+    volumes: 
+      - ".:/app"
+    ports:
+      - "9006:19006"
+    tty: true

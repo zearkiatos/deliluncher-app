@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import MealsScreen from "./src/screens/Meals";
+import Modal from "./src/screens/Modal";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>DeliLuncher</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const AppNavigator = createStackNavigator(
+  {
+    Meals: {
+      screen: MealsScreen
+    }
   },
-});
+  {
+    initialRouteName: "Meals"
+  }
+);
+
+const RootStack = createStackNavigator(
+  {
+    Main: AppNavigator,
+    Modal: Modal
+  },
+  {
+    mode: "modal",
+    headerModal: "none"
+  }
+);
+
+export default createAppContainer(RootStack);
