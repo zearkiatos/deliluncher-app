@@ -21,7 +21,7 @@ const RootStack = createStackNavigator(
   },
   {
     mode: "modal",
-    headerModal: "none"
+    headerMode: "none"
   }
 );
 
