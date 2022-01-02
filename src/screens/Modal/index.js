@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const Model = () => {
+const Modal = () => {
     return (
         <View>
             <Text>

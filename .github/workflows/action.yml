@@ -28,7 +28,9 @@ jobs:
       run: |
         touch .env &&
         echo "NODE_ENV=${NODE_ENV}" > .env &&
+        echo "SERVERLESS_DELILUNCHER_API_BASE_URL=${SERVERLESS_DELILUNCHER_API_BASE_URL}" >> .env
       env:
         NODE_ENV: ${{ secrets.NODE_ENV }}
+        SERVERLESS_DELILUNCHER_API_BASE_URL: ${{ secrets.SERVERLESS_DELILUNCHER_API_BASE_URL }}
     - name: Build docker 🐳
       run: docker build . -t=deliluncher-app:ghb-$GITHUB_RUN_NUMBER
