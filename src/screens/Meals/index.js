@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
+import React from "react";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import ListItem from "../components/ListItem";
+import config from "../../config";
+import useFetch from "../../hooks/useFetch";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,34 +16,27 @@ const styles = StyleSheet.create({
   }
 });
 
-const data = [
-  {
-    _id: Date.now(),
-    name: "Churrasco",
-    desc: "Típical dish, avocado, mayonaise 🥩🍔"
-  }
-];
-
 const Meals = ({ navigation }) => {
-  const [loading, setLoading] = useState(true);
-  const [meals, setMeals] = useState([]);
-
-  const fetchMeals = async () => {
-    const response = await fetch();
-  };
+  const { loading, data: meals } = useFetch(
+    `${config.SERVERLESS_DELILUNCHER_API_BASE_URL}/api/meals`
+  );
   return (
-    <View>
-      <FlatList
-        style={styles.list}
-        data={data}
-        keyExtractor={(x) => x._id}
-        renderItem={({ item }) => (
-          <ListItem
-            onPress={() => navigation.navigate("Modal", { _id: item._id })}
-            name={item.name}
-          />
-        )}
-      ></FlatList>
+    <View style={styles.container}>
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <FlatList
+          style={styles.list}
+          data={meals}
+          keyExtractor={(x) => x._id}
+          renderItem={({ item }) => (
+            <ListItem
+              onPress={() => navigation.navigate("Modal", { _id: item._id })}
+              name={item.name}
+            />
+          )}
+        ></FlatList>
+      )}
     </View>
   );
 };
