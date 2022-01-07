@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
-import ListItem from "../components/ListItem";
+import ListItem from "../../components/ListItem";
 import config from "../../config";
 import useFetch from "../../hooks/useFetch";
 
