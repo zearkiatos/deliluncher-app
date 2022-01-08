@@ -7,7 +7,12 @@ import Modal from "./src/screens/Modal";
 
 const OnBoardingNavigator = createStackNavigator(
   {
-    Login: LoginScreen,
+    Login: {
+      screen: LoginScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
     Register: RegisterScreen
   },
   {
