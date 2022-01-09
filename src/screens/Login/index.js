@@ -5,11 +5,11 @@ const Login = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
-                Login
+                Log in
             </Text>
-            <TextInput style={styles.input} />
-            <TextInput style={styles.input}/>
-            <Button title="Login" onPress={() => {}}></Button>
+            <TextInput style={styles.input} placeholder="Email"/>
+            <TextInput style={styles.input} placeholder="Password"/>
+            <Button title="Log in" onPress={() => {}}></Button>
             <Button title="Register" onPress={() => navigation.navigate('Register')}></Button>
         </View>
     );

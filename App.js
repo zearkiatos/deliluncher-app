@@ -13,7 +13,12 @@ const OnBoardingNavigator = createStackNavigator(
         header: null
       }
     },
-    Register: RegisterScreen
+    Register: {
+      screen: RegisterScreen,
+      navigationOptions: {
+        header: null
+      }
+    }
   },
   {
     initialRouteName: "Login"
