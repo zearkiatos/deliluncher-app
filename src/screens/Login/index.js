@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
         style={styles.input}
         placeholder="Password"
         onChangeText={subscribe('password')}
-        secureTextEntry="true"
+        secureTextEntry={true}
       />
       <Button title="Log in" onPress={handleSubmit}></Button>
       <Button
