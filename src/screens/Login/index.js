@@ -1,6 +1,15 @@
 import React from "react";
-import { Text, TextInput, View, StyleSheet, Button } from "react-native";
-import useForm from '../../hooks/useForm';
+import {
+  AsyncStorage,
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  Button,
+  Alert
+} from "react-native";
+import useForm from "../../hooks/useForm";
+import config from "../../config";
 
 const Login = ({ navigation }) => {
   const initialState = {
@@ -8,23 +17,44 @@ const Login = ({ navigation }) => {
     password: ""
   };
   const onSubmit = (values) => {
-    console.log(values);
+    fetch(`${config.SERVERLESS_DELILUNCHER_API_BASE_URL}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json"
+      },
+      body: JSON.stringify(values)
+    })
+      .then((x) => x.text())
+      .then((x) => {
+        try {
+          return JSON.parse(x);
+        } catch (ex) {
+          throw ex;
+        }
+      })
+      .then((x) => {
+        AsyncStorage.setItem("token", x.token);
+        navigation.navigate("Meals");
+      })
+      .catch((ex) => Alert.alert(`Error ${ex}`));
   };
   const { subscribe, inputs, handleSubmit } = useForm(initialState, onSubmit);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Log in</Text>
       <TextInput
+        autoCapitalize="none"
         value={inputs.email}
         style={styles.input}
         placeholder="Email"
-        onChangeText={subscribe('email')}
+        onChangeText={subscribe("email")}
       />
       <TextInput
+        autoCapitalize="none"
         value={inputs.password}
         style={styles.input}
         placeholder="Password"
-        onChangeText={subscribe('password')}
+        onChangeText={subscribe("password")}
         secureTextEntry={true}
       />
       <Button title="Log in" onPress={handleSubmit}></Button>
