@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { AsyncStorage, View, Text, StyleSheet, Button } from "react-native";
 import useFetch from "../../hooks/useFetch";
 import config from "../../config";
 
@@ -10,18 +10,25 @@ const Modal = ({ navigation }) => {
   );
   const onCancel = () => navigation.navigate("Meals");
   const onAccept = () => {
-    fetch(`${config.SERVERLESS_DELILUNCHER_API_BASE_URL}/api/orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        mealId: id,
-        userId: "userId"
-      })
-    }).then(() => {
-      alert("The order was generated");
-      navigation.navigate("Meals");
+    AsyncStorage.getItem("token").then((token) => {
+      if (token) {
+        fetch(`${config.SERVERLESS_DELILUNCHER_API_BASE_URL}/api/orders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token
+          },
+          body: JSON.stringify({
+            mealId: id
+          })
+        }).then((x) => {
+          if (x.status !== 201) {
+            return alert(`The order couldn't be generated 😞`);
+          }
+          alert("The order was generated");
+          navigation.navigate("Meals");
+        });
+      }
     });
   };
   return (
