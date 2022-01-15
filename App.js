@@ -3,6 +3,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import MealsScreen from "./src/screens/Meals";
 import LoginScreen from "./src/screens/Login";
 import RegisterScreen from "./src/screens/Register";
+import AuthLoading from "./src/screens/AuthLoading";
 import Modal from "./src/screens/Modal";
 
 const OnBoardingNavigator = createStackNavigator(
@@ -49,11 +50,12 @@ const RootStack = createStackNavigator(
 
 const BaseStack = createSwitchNavigator(
   {
+    AuthLoading,
     OnBoarding: OnBoardingNavigator,
     Root: RootStack
   },
   {
-    initialRouteName: "OnBoarding"
+    initialRouteName: "AuthLoading"
   }
 );
 
